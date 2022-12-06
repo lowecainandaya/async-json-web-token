@@ -1,0 +1,10 @@
+{
+  "name": "@fntools/jsonwebtoken",
+  "version": "0.0.0",
+  "description": "a extended version of jsonwebtoken",
+  "main": "main.js",
+  "repository": "https://github.com/lowecainandaya/async-json-web-token",
+  "author": "lluie andaya",
+  "license": "MIT",
+  "private": false
+}
