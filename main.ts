@@ -8,8 +8,9 @@ class JSON_WEB_TOKEN_CLASS{
   sign(payload:any,options?:any,cb?:Function):Promise<string>|void{
     const secret = this.secret;
     if(typeof cb === "function"){
-      jwt.sign(payload,secret,options||{},cb);
-      return;
+      return jwt.sign(payload,secret,options||{},cb);
+    } else if(typeof options === "function") {
+      return jwt.sign(payload,secret,options)
     } else {
       return new Promise((r,j) => {
         jwt.sign(payload,secret,options||{},(err:any,token:string) => {
@@ -28,11 +29,11 @@ class JSON_WEB_TOKEN_CLASS{
   verify(token:string,options?:any,cb?:Function):Promise<any>|void {
     const secret = this.secret;
     if(typeof cb === 'function' ){
-      jwt.verify(token,secret,options||{},cb)
-      return;
+      return jwt.verify(token,secret,options||{},cb)
+      
     } else if(typeof options === "function") {
-      jwt.verify(token,secret,options)
-      return;
+      return jwt.verify(token,secret,options)
+      
     } else {
       console.log(options)
       return new Promise((r,j) => {
