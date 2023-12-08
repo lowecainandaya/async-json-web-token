@@ -1,133 +1,143 @@
 # promise-jwt
+
 promise-jwt is a class based jsonwebtoken alternative which is created from jsonwebtoken library itself.
 
-### INSTALL 
-```bash 
+### INSTALL
+
+```bash
+# NPM
 $ npm install @fntools/jsonwebtoken --save
+
 // or 
+# YARN 
 $ yarn add @fntools/jsonwebtoken
 ```
 
 ### DOCUMENTATION/USAGE
 
-#### *new JWT(secret:string|PrivateKey)*
+#### _new JWT(secret:string|PrivateKey)_
 
 promise-jwt is a framework for promised based jwt token.
 
-- ***secret***
+- **_secret_**
   it is a string or a privateKey that is used to sign the jwt token
 
 ### METHODS
-    
-- ***sign(payload[,options][,cb(error,token)])***
+
+- **_sign(payload[,options][,cb(error,token)])_**
   is the method used to create the jwt token string
-  * *payload* - is an object leteral that you want to sign
-  * *options* - is jwt options
-  * *cb* - is the callback funtion only used if dev doesn't want to use promise
 
-- ***verify(token[,options][,cb(error,decode)])*** 
+  - _payload_ - is an object leteral that you want to sign
+  - _options_ - is jwt options
+  - _cb_ - is the callback funtion only used if dev doesn't want to use promise
+
+- **_verify(token[,options][,cb(error,decode)])_**
   is a method that is used verify a token.
-  * *token* - is a jwt token string
-  * *options* - is jwt options
-  * *cb* - is the callback funtion only used if dev doesn't want to use promise
-  
+  - _token_ - is a jwt token string
+  - _options_ - is jwt options
+  - _cb_ - is the callback funtion only used if dev doesn't want to use promise
 
+#### _new Jsonwebtoken(secret:string|PrivateKey)_
 
+It is a class who behave like the original jwt
 
-#### *new Jsonwebtoken(secret:string|PrivateKey)*
-It is a class who behave like the original jwt 
-
-- ***secret***
+- **_secret_**
   it is a string or a privateKey that is used to sign the jwt token
+
 ### METHODS
-- ***sign(payload[,options][,cb(error,token)])***
-  * *payload* - is an object leteral that you want to sign
-  * *options* - is jwt options
-  * *cb* - is the callback is used to let jwt behave asyncronously
-  
-- ***verify(token[,options][,cb(error,decode)])***
-  * *payload* - is an object leteral that you want to sign
-  * *options* - is jwt options
-  * *cb* - is the callback is used to let jwt behave asyncronously
 
+- **_sign(payload[,options][,cb(error,token)])_**
+  - _payload_ - is an object leteral that you want to sign
+  - _options_ - is jwt options
+  - _cb_ - is the callback is used to let jwt behave asyncronously
+- **_verify(token[,options][,cb(error,decode)])_**
+  - _payload_ - is an object leteral that you want to sign
+  - _options_ - is jwt options
+  - _cb_ - is the callback is used to let jwt behave asyncronously
 
-Note ``JWT.prototype.sync === new Jsonwebtoken(someSecret)``
+Note `JWT.prototype.sync === new Jsonwebtoken(someSecret)`
 
 ### Examples
-```javascript 
-  const {JWT} = require("@fntools/jsonwebtoken") // or import {Jsonwebtoken} from "@fntools/jsonwebtoken"
-  // initialize 
-  const jwt = new JWT("some secret");
-  jwt.sign({sample:"sample payload"}).then((token) => {
-    console.log(token);
-  }).catch((error) => {
-    console.log(error)
+
+```javascript
+const { JWT } = require("@fntools/jsonwebtoken"); // or import {Jsonwebtoken} from "@fntools/jsonwebtoken"
+// initialize
+const jwt = new JWT("some secret");
+jwt.sign({ sample: "sample payload" })
+  .then((token) => {
+    // do something cool 
   })
-  
-  // or 
-  jwt.sign({sample:"sample payload"},(error,token) => {
-    if(error){
-      console.log(error)
-    } else {
-      console.log(token)
-    }
+  .catch((error) => {
+    // handles error 
+  });
+
+// or use callback for synchrounous call 
+jwt.sign({ sample: "sample payload" }, (error, token) => {
+  if (error) {
+    // do something cool 
+  } else {
+    // handle error 
+  }
+});
+
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYW1wbGUiOiJzYW1wbGUgcGF5bG9hZCIsImlhdCI6MTY3MDY3NDQ3Nn0.g8bh59r5qwB6u-Lb5X38R_wr5xELUpdqVffRIwoyc9c";
+
+jwt.verify(token)
+  .then((decode) => {
+    // do something cool...
   })
-  // verify 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzYW1wbGUiOiJzYW1wbGUgcGF5bG9hZCIsImlhdCI6MTY3MDY3NDQ3Nn0.g8bh59r5qwB6u-Lb5X38R_wr5xELUpdqVffRIwoyc9c'
-   jwt.verify(token).then((decode) => {
-     console.log("no error");
-     console.log(decode)
-   } ).catch((error) => {
-     console.log("error\n", error)
-   })
-   
-   // or 
-   jwt.verify(token,(error,decode) => {
-     if(error){
-        console.log("error\n", error)
-     } else {
-      console.log("no error");
-      console.log(decode)
-     }
-   })
-   
-  
+  .catch((error) => {
+    // handles error
+  });
+
+// or verify sync  using cb
+jwt.verify(token, (error, decode) => {
+  if (error) {
+    // handle errors
+  } else {
+    // handle success
+  }
+});
 ```
 
-```javascript 
+```javascript
 const {Jsonwebtoken} = require("@fntools/Jsonwebtoken"); // import Jsonwebtoken from "@fntools/Jsonwebtoken"
 // if you want @fntools/jsonwebtoken to behave like the jsonwebtoken original library you will use Jsonwebtoken or JWT.sync ;
 
 const secret = "some secret";
 const jwt = new Jsonwebtoken(secret);
-// sign 
-var token = jwt.sign({ foo: 'bar' }); 
+// sign
+var token = jwt.sign({ foo: 'bar' });
 // if callback is not provided it will behave synchronously and will return jwt string
-// sign  asynchronously 
+// sign  asynchronously
 jwt.sign({ foo: 'bar' }, { algorithm: 'RS256' }, function(err, token) {
-  console.log(token);
+  // do something call 
 });
-// verify
- verify a token symmetric - synchronous
+
+
+// verify a token symmetric - synchronous
 var decoded = jwt.verify(token);
 console.log(decoded.foo) // bar
- 
+
 // verify a token symmetric
 jwt.verify(token,  function(err, decoded) {
   console.log(decoded.foo) // bar
 });
- 
+
 ```
 
-***JWT.prototype.sync***
+**_JWT.prototype.sync_**
+
 ```javascript
+
 const {JWT} = require("@fntools/jsonwebtoken") // or import {JWT} from "@fntools/j"
-const secret = "someSecret"
+const secret = "some secret"
 const jwt = new JWT('some secret');
-// sign 
-var token = jwt.sync.sign({ foo: 'bar' }); 
+// sign
+var token = jwt.sync.sign({ foo: 'bar' });
 // if callback is not provided it will behave synchronously and will return jwt string
-// sign  asynchronously 
+// sign  asynchronously
 jwt.sync.sign({ foo: 'bar' }, { algorithm: 'RS256' }, function(err, token) {
   console.log(token);
 });
@@ -135,16 +145,16 @@ jwt.sync.sign({ foo: 'bar' }, { algorithm: 'RS256' }, function(err, token) {
  verify a token symmetric - synchronous
 var decoded = jwt.verify(token);
 console.log(decoded.foo) // bar
- 
+
 // verify a token symmetric
 jwt.sync.verify(token,  function(err, decoded) {
   console.log(decoded.foo) // bar
 });
 
 ```
-*Note `` new JWT(secret).sync === jwt`` and ``Jsonwebtoken`` is better for non-async manner 
-it doesn't require the use of `async` and  `await`*
-### DEVELOPED BY L0WE ANDAYA
 
-Learn More @t [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) 
+_Note ` new JWT(secret).sync === jwt` and `Jsonwebtoken` is better for non-async manner
+it doesn't require the use of `async` and `await`_
 
+
+Learn More @t [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
