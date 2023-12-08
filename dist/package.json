@@ -2,22 +2,17 @@
   "name": "@fntools/jsonwebtoken",
   "version": "0.0.5",
   "description": "Use JSON-WEB-TOKEN with some extended feature",
-  "main": "./dist/main.js",
-  "types": "./dist/typings/main.d.ts",
+  "main": "./main.js",
+  "types": "./typings/main.d.ts",
   "exports": {
     "."  : {
-      "require" : "./dist/main.js",
-      "import" : "./dist/es6/main.js"
+      "require" : "./main.js",
+      "import" : "./es6/main.js"
     }
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lowecainandaya/async-json-web-token"
-  },
-  "scripts" : {
-    "compile" : "tsc --watch",
-    "test" : "nodemon ./dist/jwt.test.js",
-    "build": "tsc -p ./tsconfig.json && tsc -p ./tsconfig.json --module es6 --outdir ./dist/es6"
   },
   "author": "lluie andaya",
   "license": "MIT",
